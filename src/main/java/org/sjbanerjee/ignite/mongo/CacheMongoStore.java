@@ -101,5 +101,15 @@ public class CacheMongoStore extends CacheStoreAdapter<Integer, Data> implements
             System.out.println("Removed data: " + key);
         }
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void loadCache(IgniteBiInClosure<String, Data> clo, Object... args){
+        datastore.find(Data.class).asList()
+                    .forEach( x -> {
+                       System.out.println("Loaded " + x.toString());
+                       clo.apply(x.getId(), x);
+                  });
+    }
 }
 
