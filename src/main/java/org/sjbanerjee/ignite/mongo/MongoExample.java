@@ -30,6 +30,9 @@ public class MongoExample {
         // Set write-behind flag for synchronous/asynchronous persistent store update
         cc.setWriteBehindEnabled(writeBehind);
         IgniteCache<Integer, Data> cache = ignite.getOrCreateCache(cc);
+        
+        if(cache.size() <= 0)
+            cache.localLoadCache(null);//??
 
         //Initialize data population
         initializeData(cache, DATA_LIMIT);
